@@ -158,22 +158,7 @@ export const ProductionBlock = (props: ProductionBlockProps) => {
         height: "100%",
       }}
     >
-      {/* <SandpackProvider
-        template="react"
-        customSetup={{
-          dependencies: {
-            "styled-components": "^5.3.3",
-            "@primer/react": "^35.2.0",
-          },
-          files,
-        }}
-        autorun
-      >
-        <SandpackPreview
-          showOpenInCodeSandbox={false}
-          showRefreshButton={false}
-        />
-      </SandpackProvider> */}
+      {/* not implemented yet */}
     </div>
   );
 };

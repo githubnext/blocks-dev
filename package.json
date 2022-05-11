@@ -10,7 +10,6 @@
     "blocks-dev": "./bin/blocks-dev.js"
   },
   "dependencies": {
-    "@codesandbox/sandpack-react": "^0.19.6",
     "@githubnext/utils": "^0.22.0",
     "@loadable/component": "^5.15.0",
     "@octokit/openapi-types": "^11.2.0",

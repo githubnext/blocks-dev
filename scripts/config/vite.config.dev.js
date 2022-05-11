@@ -20,7 +20,7 @@ const config = defineConfig({
   },
   optimizeDeps: {
     // what else can we do here?
-    include: ['react', 'react-dom', 'react-dom/client', 'git-url-parse', 'styled-components', 'hoist-non-react-statics', 'react-is', 'lodash.uniqueid', '@primer/react', 'codesandbox-import-utils'],
+    include: ['react', 'react-dom', 'react-dom/client', 'git-url-parse', 'styled-components', 'hoist-non-react-statics', 'react-is', 'lodash.uniqueid', '@primer/react'],
   },
   build: {
     commonjsOptions: {
