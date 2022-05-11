@@ -9,6 +9,9 @@
   "bin": {
     "blocks-dev": "./bin/blocks-dev.js"
   },
+  "lint-staged": {
+    "**/*": "prettier --write --ignore-unknown"
+  },
   "dependencies": {
     "@githubnext/utils": "^0.22.0",
     "@loadable/component": "^5.15.0",
@@ -23,6 +26,7 @@
     "express": "^4.18.1",
     "git-url-parse": "^11.6.0",
     "lodash.uniqueid": "^4.0.1",
+    "prettier": "^2.6.2",
     "react-error-boundary": "^3.1.4",
     "react-query": "^3.39.0",
     "styled-components": "^5.3.5",
