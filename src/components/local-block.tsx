@@ -39,9 +39,8 @@ export const LocalBlock = (props: LocalBlockProps) => {
   const [Block, setBlock] = useState<React.ComponentType<any> | null>(null);
 
   const getContents = async () => {
-    const path = `../../../../${block.entry}`
-    const importPrefix = "../../../../"
-    const imports = import.meta.glob(`../../../../blocks/**`)
+    const importPrefix = "../../../../../"
+    const imports = import.meta.glob(`../../../../../blocks/**`)
     const importPath = importPrefix + block.entry
     const importContent = imports[importPath]
     const content = await loadable(importContent);

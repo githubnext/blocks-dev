@@ -1,5 +1,5 @@
 {
-  "name": "blocks-dev",
+  "name": "@githubnext/blocks",
   "version": "1.0.0",
   "license": "MIT",
   "engines": {
@@ -18,7 +18,7 @@
     "prepublish": "yarn build"
   },
   "bin": {
-    "blocks-dev": "./bin/blocks-dev.js"
+    "blocks": "./bin/blocks.js"
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown"

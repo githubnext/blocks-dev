@@ -4,7 +4,7 @@ const paths = require("./paths")
 
 // https://vitejs.dev/config/
 const config = defineConfig({
-  root: paths.blocksDev + "/src",
+  root: paths.blocks + "/src",
   server: {
     port: 4000,
     fs: {
@@ -16,7 +16,7 @@ const config = defineConfig({
   resolve: {
     alias: {
       "@user": process.cwd(),
-      "@utils": process.cwd() + "/node_modules/blocks-dev/dist",
+      "@utils": process.cwd() + "/node_modules/@githubnext/blocks/dist",
     }
   },
   optimizeDeps: {

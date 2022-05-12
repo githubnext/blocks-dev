@@ -1,5 +1,5 @@
 const paths = {
-  blocksDev: "node_modules/blocks-dev/",
+  blocks: "node_modules/@githubnext/blocks/",
   userRoot: "./",
   blocksFolder: "./blocks",
 };

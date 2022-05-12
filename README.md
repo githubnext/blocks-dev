@@ -1,10 +1,10 @@
-# blocks-dev
+# blocks
 
 Welcome! This package supports local development of custom GitHub Blocks.
 
 # Scripts
 
-Using the `blocks-dev` command, you can run the following commands:
+Using the `blocks` command, you can run the following commands:
 
 - `start` - Starts a local development environment and builds Blocks bundles.
 - `build` - Builds Blocks bundles.
