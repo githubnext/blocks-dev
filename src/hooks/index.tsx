@@ -1,6 +1,6 @@
 import { useQuery, UseQueryOptions } from "react-query";
 import { components } from "@octokit/openapi-types";
-import { FileData, FolderData } from "@githubnext/utils";
+import { FileData, FolderData } from "@utils";
 import { useEffect, useState } from "react";
 
 export interface RepoContext {

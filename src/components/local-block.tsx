@@ -6,7 +6,7 @@ import {
   FolderContext,
   RepoFiles,
   onRequestGitHubData as onRequestGitHubDataFetch,
-} from "@githubnext/utils";
+} from "@utils";
 import { ThemeProvider, BaseStyles } from "@primer/react";
 
 interface Block {
