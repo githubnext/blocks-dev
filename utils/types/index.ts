@@ -1,3 +1,31 @@
+export interface Block {
+  id: string;
+  type: string;
+  title: string;
+  description: string;
+  sandbox?: boolean;
+  entry: string;
+  extensions?: string[];
+  matches?: string[];
+  owner?: string;
+  repo?: string;
+}
+
+export interface BlocksRepo {
+  owner: string;
+  repo: string;
+  full_name: string;
+  id: number;
+  html_url: string;
+  description: string;
+  stars: number;
+  watchers: number;
+  language: string;
+  topics: string[];
+
+  blocks: Block[];
+}
+
 export type FileContext = {
   file: string;
   path: string;
@@ -16,15 +44,18 @@ export type FolderContext = {
 
 export type CommonBlockProps = {
   metadata: any;
-  BlockComponent: any;
-  onUpdateMetadata: (metadata: any) => void;
-  onNavigateToPath: (path: string) => void;
-  onRequestUpdateContent: (content: string) => void;
-  onUpdateContent: (content: string) => void;
+  onUpdateMetadata: (_: any) => void;
+  onNavigateToPath: (_: string) => void;
+  onRequestUpdateContent: (_: string) => void;
+  onUpdateContent: (_: string) => void;
   onRequestGitHubData: (
     path: string,
     params?: Record<string, any>
   ) => Promise<any>;
+
+  // private API for use by githubnext/blocks-examples blocks only
+  BlockComponent: any;
+  onRequestBlocksRepos: () => Promise<BlocksRepo[]>;
 };
 
 export type FileData = {
@@ -42,7 +73,6 @@ export type FolderData = {
   tree: TreeItem[];
   context: FolderContext;
 };
-
 export type FolderBlockProps = FolderData & CommonBlockProps;
 
 export type FileImport = {
@@ -56,20 +86,13 @@ export type FileImport = {
   sideEffectOnly: boolean;
 };
 
-export type RepoFiles = {
-  path?: string;
-  mode?: string;
-  type?: string;
-  sha?: string;
-  size?: number;
-  url?: string;
-}[];
+export type RepoFiles = TreeItem[];
 
 export type LightFileData = {
   contents: string;
   path: string;
 };
 export type GetFileContent = (path: string) => Promise<string>;
-export type UseFileContentParams = {
+export interface UseFileContentParams {
   path: string;
-};
+}
