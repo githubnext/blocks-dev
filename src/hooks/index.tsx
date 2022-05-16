@@ -1,6 +1,6 @@
 import { useQuery, UseQueryOptions } from "react-query";
 import { components } from "@octokit/openapi-types";
-import { FileData, FolderData } from "@githubnext/utils";
+import { FileContent, FolderData } from "@utils";
 import { useEffect, useState } from "react";
 
 export interface RepoContext {
@@ -69,7 +69,7 @@ const PAT = import.meta.env.VITE_GITHUB_PAT;
 
 export async function getFileContent(
   params: UseFileContentParams
-): Promise<FileData> {
+): Promise<FileContent> {
   const { repo, owner, path, fileRef } = params;
   const branch = fileRef || "HEAD";
 
@@ -103,7 +103,7 @@ export async function getFileContent(
 
 export function useFileContent(
   params: UseFileContentParams,
-  config?: UseQueryOptions<FileData>
+  config?: UseQueryOptions<FileContent>
 ) {
   const { repo, owner, path, fileRef } = params;
 

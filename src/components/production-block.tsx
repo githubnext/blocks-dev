@@ -6,7 +6,7 @@ import {
   RepoFiles,
   bundleCodesandboxFiles,
   onRequestGitHubData,
-} from "@githubnext/utils";
+} from "@utils";
 import uniqueId from "lodash.uniqueid";
 
 type Block = {

@@ -14,7 +14,12 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "paths": {
+      "@utils": ["./utils"],
+      "@user": ["./"]
+    },
+    "types": ["vite/client"]
   },
-  "include": ["./src"]
+  "include": ["./src", "./utils"]
 }

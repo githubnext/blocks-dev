@@ -1,8 +1,10 @@
 import GitUrlParse from "git-url-parse";
-import React, { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo } from "react";
 import { AppInner } from "./app-inner";
 import { useLocalStorage } from "./../hooks";
-import blocksConfig from "@user/blocks.config.json"
+import type { Block } from "@utils";
+import blocksConfig_raw from "@user/blocks.config.json";
+const blocksConfig = blocksConfig_raw as Block[];
 
 function Wrapper() {
   const [blockId, setBlockId] = useLocalStorage(
