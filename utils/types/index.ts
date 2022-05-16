@@ -58,6 +58,11 @@ export type CommonBlockProps = {
   onRequestBlocksRepos: () => Promise<BlocksRepo[]>;
 };
 
+export type FileContent = {
+  content: string;
+  context: FileContext;
+};
+
 export type FileData = {
   content: string;
   originalContent: string;

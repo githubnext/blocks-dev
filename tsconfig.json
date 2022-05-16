@@ -18,7 +18,8 @@
     "paths": {
       "@utils": ["./utils"],
       "@user": ["./"]
-    }
+    },
+    "types": ["vite/client"]
   },
   "include": ["./src", "./utils"]
 }

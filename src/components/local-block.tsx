@@ -39,10 +39,10 @@ export const LocalBlock = (props: LocalBlockProps) => {
   const [Block, setBlock] = useState<React.ComponentType<any> | null>(null);
 
   const getContents = async () => {
-    const importPrefix = "../../../../../"
-    const imports = import.meta.glob(`../../../../../blocks/**`)
-    const importPath = importPrefix + block.entry
-    const importContent = imports[importPath]
+    const importPrefix = "../../../../../";
+    const imports = import.meta.glob(`../../../../../blocks/**`);
+    const importPath = importPrefix + block.entry;
+    const importContent = imports[importPath];
     const content = await loadable(importContent);
     setBlock(content);
   };
@@ -62,7 +62,7 @@ export const LocalBlock = (props: LocalBlockProps) => {
       "*"
     );
   };
-  const onNavigateToPath = useCallback((path) => {
+  const onNavigateToPath = useCallback((path: string) => {
     console.log(`Triggered a navigation to the file/folder: ${path}`);
     window.postMessage(
       {
