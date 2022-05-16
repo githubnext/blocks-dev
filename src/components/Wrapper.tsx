@@ -15,8 +15,10 @@ function Wrapper() {
     "fileUrl",
     "https://github.com/githubocto/flat/blob/main/src/git.ts"
   );
-  const [doMimicProductionEnvironment, setDoMimicProductionEnvironment] =
-    useLocalStorage("doMimicProductionEnvironment", false);
+  // disabled until we have a working production environment
+  const doMimicProductionEnvironment = false;
+  // const [doMimicProductionEnvironment, setDoMimicProductionEnvironment] =
+  //   useLocalStorage("doMimicProductionEnvironment", false);
 
   const metadataKey = `composable-github-block-template--${blockId}-${fileUrl}`;
   const [metadata, setMetadata] = useLocalStorage(metadataKey, {});
@@ -172,7 +174,8 @@ function Wrapper() {
             </optgroup>
           </select>
         </div>
-        <div
+        {/* no production environment for now */}
+        {/* <div
           style={{
             flex: 1,
             minWidth: "min(90vw, 13em)",
@@ -201,6 +204,7 @@ function Wrapper() {
               padding: "0.5em",
               border: "1px solid #ccc",
             }}
+            disabled
             name="block"
             id="block"
           >
@@ -211,7 +215,7 @@ function Wrapper() {
               Production environment (test for bugs in production environment)
             </option>
           </select>
-        </div>
+        </div> */}
       </div>
       <div
         style={{
