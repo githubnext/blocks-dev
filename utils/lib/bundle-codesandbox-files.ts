@@ -50,8 +50,6 @@ export const bundleCodesandboxFiles = ({
 <title>Custom block</title>
 </head>
 <body>
-<!-- this won't load if added to the head -->
-<link href="https://unpkg.com/@primer/css@^19.0.0/dist/primer.css" rel="stylesheet" />
 ${cssFilesString}
 <div id="root"></div>
 </body>
@@ -72,6 +70,7 @@ ${cssFilesString}
   import React from "react";
   import ReactDOM from "react-dom";
   import ReactDOMServer from "react-dom/server";
+  import { ThemeProvider, BaseStyles } from "@primer/react";
 
   ${mainContent}
   const Block = BlockBundle.default;
@@ -165,16 +164,22 @@ ${cssFilesString}
       return () => { window.removeEventListener("message", onMessage); }
     }, []);
 
-    return props && <Block
-      // recreate the block if we change file or version
-      key={props.context.sha}
-      {...props}
-      onUpdateMetadata={onUpdateMetadata}
-      onNavigateToPath={onNavigateToPath}
-      onUpdateContent={onUpdateContent}
-      onRequestUpdateContent={onUpdateContent} // for backwards compatibility
-      onRequestGitHubData={onRequestGitHubData}
-    />
+    return props && (
+      <ThemeProvider>
+        <BaseStyles>
+          <Block
+            // recreate the block if we change file or version
+            key={props.context.sha}
+            {...props}
+            onUpdateMetadata={onUpdateMetadata}
+            onNavigateToPath={onNavigateToPath}
+            onUpdateContent={onUpdateContent}
+            onRequestUpdateContent={onUpdateContent} // for backwards compatibility
+            onRequestGitHubData={onRequestGitHubData}
+          />
+        </BaseStyles>
+      </ThemeProvider>
+    );
   }
   `;
 
