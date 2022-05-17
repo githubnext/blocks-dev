@@ -15,7 +15,7 @@ To reduce the cognitive load associated with writing file and folder block compo
 
 ## How to use
 
-`yarn add @githubnext/utils`
+`yarn add @githubnext/blocks`
 
 ```tsx
 import {
@@ -23,13 +23,13 @@ import {
   FolderBlockProps,
   getLanguageFromFilename,
   getNestedFileTree,
-} from '@githubnext/utils`
+} from '@githubnext/blocks`
 ```
 
 ## FileBlockProps
 
 ```tsx
-import { FileBlockProps } from '@githubnext/utils';
+import { FileBlockProps } from '@githubnext/blocks';
 
 export default function (props: FileBlockProps) {
   const { content, metadata, onUpdateMetadata } = props;
@@ -40,7 +40,7 @@ export default function (props: FileBlockProps) {
 ## FolderBlockProps
 
 ```tsx
-import { FolderBlockProps } from '@githubnext/utils';
+import { FolderBlockProps } from '@githubnext/blocks';
 
 export default function (props: FileBlockProps) {
   const { tree, metadata, onUpdateMetadata, BlockComponent } = props;
@@ -56,7 +56,7 @@ A helper function that returns the "language" of a file, given a valid file path
 
 A helper function to turn the flat folder `tree` array into a nested tree structure
 
-import { FolderBlockProps, getNestedFileTree, } from "@githubnext/utils";
+import { FolderBlockProps, getNestedFileTree, } from "@githubnext/blocks";
 
 ```tsx
 export default function (props: FolderBlockProps) {
