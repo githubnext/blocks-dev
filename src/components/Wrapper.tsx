@@ -9,6 +9,13 @@ function Wrapper() {
     "blockId",
     blocksConfig[0].entry
   );
+
+  // validate stored blockId
+  useEffect(() => {
+    if (!blocksConfig.find((v) => v.entry === blockId))
+      setBlockId(blocksConfig[0].entry);
+  });
+
   const [fileUrl, setFileUrl] = useLocalStorage(
     "fileUrl",
     "https://github.com/githubocto/flat/blob/main/src/git.ts"
