@@ -102,7 +102,7 @@ export const LocalBlock = (props: LocalBlockProps) => {
   if (!Block) return null;
   return (
     <ThemeProvider>
-      <BaseStyles>
+      <BaseStyles style={{ height: "100%" }}>
         <Block
           context={context}
           content={content}
