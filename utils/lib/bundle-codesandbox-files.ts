@@ -166,7 +166,7 @@ ${cssFilesString}
 
     return props && (
       <ThemeProvider>
-        <BaseStyles>
+        <BaseStyles style={{ height: "100%" }}>
           <Block
             // recreate the block if we change file or version
             key={props.context.sha}
