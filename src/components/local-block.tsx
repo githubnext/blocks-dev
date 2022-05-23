@@ -87,7 +87,8 @@ export const LocalBlock = (props: LocalBlockProps) => {
       },
       "*"
     );
-    const data = await onRequestGitHubDataFetch(path, params);
+    const PAT = import.meta.env.VITE_GITHUB_PAT;
+    const data = await onRequestGitHubDataFetch(path, params, PAT);
     window.postMessage(
       {
         type: "github-data--response",
