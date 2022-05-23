@@ -6,7 +6,7 @@ interface NotificationType {
   info: any;
   details: string;
 }
-export const CallbackNotifications = ({}) => {
+export const CallbackNotifications = ({ }) => {
   const [notifications, setNotifications] = useState<
     (NotificationType | null)[]
   >([]);
@@ -47,7 +47,6 @@ export const CallbackNotifications = ({}) => {
       }[eventType];
       if (!type) return;
       const newNotification = type;
-      console.log(newNotification);
       const newNotifications = [...notificationsRef.current, newNotification];
       notificationsRef.current = newNotifications;
       const index = newNotifications.length - 1;
