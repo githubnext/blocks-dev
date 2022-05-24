@@ -51,9 +51,9 @@ export const LocalBlock = (props: LocalBlockProps) => {
   }, [block.entry]);
 
   const onUpdateMetadata = (newMetadata: any) => {
-    console.log(`Triggered a request to update the file metadata`);
-    console.log("From:", metadata);
-    console.log("To:", newMetadata);
+    styledLog(`Triggered a request to update the file metadata`);
+    styledLog("From:", metadata);
+    styledLog("To:", newMetadata);
     window.postMessage(
       {
         type: "update-metadata",
@@ -63,7 +63,7 @@ export const LocalBlock = (props: LocalBlockProps) => {
     );
   };
   const onNavigateToPath = useCallback((path: string) => {
-    console.log(`Triggered a navigation to the file/folder: ${path}`);
+    styledLog(`Triggered a navigation to the file/folder: ${path}`);
     window.postMessage(
       {
         type: "navigate-to-path",
@@ -77,7 +77,7 @@ export const LocalBlock = (props: LocalBlockProps) => {
     params: Record<string, any> = {},
     id: string = ""
   ) => {
-    console.log(`Triggered a request to fetch data from GitHub: ${path}`);
+    styledLog(`Triggered a request to fetch data from GitHub: ${path}`);
     window.postMessage(
       {
         type: "github-data--request",
@@ -87,7 +87,8 @@ export const LocalBlock = (props: LocalBlockProps) => {
       },
       "*"
     );
-    const data = await onRequestGitHubDataFetch(path, params);
+    const PAT = import.meta.env.VITE_GITHUB_PAT;
+    const data = await onRequestGitHubDataFetch(path, params, PAT);
     window.postMessage(
       {
         type: "github-data--response",
@@ -119,3 +120,14 @@ export const LocalBlock = (props: LocalBlockProps) => {
     </ThemeProvider>
   );
 };
+
+function styledLog(...args: any[]) {
+  const argsWithColor = args.reduce((acc, arg) => {
+    if (typeof arg === "string") {
+      return [...acc, `%cℹ ${arg}`, "color: #444763; background-color: #e5eafe; padding: 0.2em; display: inline-block"];
+    }
+    return [...acc, arg];
+  }
+    , [] as any[]);
+  console.info(...argsWithColor);
+}
