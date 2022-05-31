@@ -53,6 +53,10 @@ export type CommonBlockProps = {
     params?: Record<string, any>
   ) => Promise<any>;
 
+  onKVGet: (key: string) => Promise<any>;
+  onKVSet: (key: string, value: any) => Promise<void>;
+  onKVDelete: (key: string) => Promise<void>;
+
   // private API for use by githubnext/blocks-examples blocks only
   BlockComponent: any;
   onRequestBlocksRepos: () => Promise<BlocksRepo[]>;

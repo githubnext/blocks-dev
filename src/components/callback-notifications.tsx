@@ -6,7 +6,7 @@ interface NotificationType {
   info: any;
   details: string;
 }
-export const CallbackNotifications = ({ }) => {
+export const CallbackNotifications = ({}) => {
   const [notifications, setNotifications] = useState<
     (NotificationType | null)[]
   >([]);
@@ -43,6 +43,25 @@ export const CallbackNotifications = ({ }) => {
             </>
           ),
           details: JSON.stringify(event.data.config, null, 2),
+        },
+        "kv-get--request": {
+          title: "KV get",
+          info: <>Requested KV get:</>,
+          details: event.data.key,
+        },
+        "kv-set": {
+          title: "KV set",
+          info: <>Requested KV set:</>,
+          details: JSON.stringify(
+            { key: event.data.key, value: event.data.value },
+            null,
+            2
+          ),
+        },
+        "kv-delete": {
+          title: "KV delete",
+          info: <>Requested KV delete:</>,
+          details: event.data.key,
         },
       }[eventType];
       if (!type) return;
