@@ -48,7 +48,7 @@ export const LocalBlock = (props: LocalBlockProps) => {
     if (!(blockKey in kvStore)) {
       kvStore[blockKey] = {};
     }
-  });
+  }, [blockKey]);
 
   const getContents = async () => {
     const importPrefix = "../../../../../";
@@ -112,11 +112,11 @@ export const LocalBlock = (props: LocalBlockProps) => {
     return data;
   };
 
-  const onKVGet = async (key: string) => {
-    styledLog(`Triggered KV get: ${key}`);
+  const onStoreGet = async (key: string) => {
+    styledLog(`Triggered store get: ${key}`);
     window.postMessage(
       {
-        type: "kv-get--request",
+        type: "store-get--request",
         key,
       },
       "*"
@@ -124,7 +124,7 @@ export const LocalBlock = (props: LocalBlockProps) => {
     const value = kvStore[blockKey][key];
     window.postMessage(
       {
-        type: "kv-get--response",
+        type: "store-get--response",
         value,
       },
       "*"
@@ -132,29 +132,18 @@ export const LocalBlock = (props: LocalBlockProps) => {
     return value;
   };
 
-  const onKVSet = async (key: string, value: any) => {
-    styledLog(`Triggered KV set: ${key} = ${JSON.stringify(value)}`);
+  const onStoreSet = async (key: string, value: any) => {
+    styledLog(`Triggered store set: ${key} = ${JSON.stringify(value)}`);
     window.postMessage(
       {
-        type: "kv-set",
+        type: "store-set",
         key,
         value,
       },
       "*"
     );
-    kvStore[blockKey][key] = JSON.parse(JSON.stringify(value));
-  };
-
-  const onKVDelete = async (key: string) => {
-    styledLog(`Triggered KV delete: ${key}`);
-    window.postMessage(
-      {
-        type: "kv-delete",
-        key,
-      },
-      "*"
-    );
-    delete kvStore[blockKey][key];
+    if (value === undefined) delete kvStore[blockKey][key];
+    else kvStore[blockKey][key] = JSON.parse(JSON.stringify(value));
   };
 
   if (!Block) return null;
@@ -172,9 +161,8 @@ export const LocalBlock = (props: LocalBlockProps) => {
           onNavigateToPath={onNavigateToPath}
           onUpdateContent={setContent}
           onRequestGitHubData={onRequestGitHubData}
-          onKVGet={onKVGet}
-          onKVSet={onKVSet}
-          onKVDelete={onKVDelete}
+          onStoreGet={onStoreGet}
+          onStoreSet={onStoreSet}
         />
       </BaseStyles>
     </ThemeProvider>

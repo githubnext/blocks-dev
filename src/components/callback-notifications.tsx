@@ -44,24 +44,19 @@ export const CallbackNotifications = ({}) => {
           ),
           details: JSON.stringify(event.data.config, null, 2),
         },
-        "kv-get--request": {
-          title: "KV get",
-          info: <>Requested KV get:</>,
+        "store-get--request": {
+          title: "Store get",
+          info: <>Requested store get:</>,
           details: event.data.key,
         },
-        "kv-set": {
-          title: "KV set",
-          info: <>Requested KV set:</>,
+        "store-set": {
+          title: "Store set",
+          info: <>Requested store set:</>,
           details: JSON.stringify(
             { key: event.data.key, value: event.data.value },
             null,
             2
           ),
-        },
-        "kv-delete": {
-          title: "KV delete",
-          info: <>Requested KV delete:</>,
-          details: event.data.key,
         },
       }[eventType];
       if (!type) return;
