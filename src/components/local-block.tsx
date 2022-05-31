@@ -26,6 +26,12 @@ interface LocalBlockProps {
   metadata?: any;
   context: FileContext | FolderContext;
 }
+
+const kvStore: any = {};
+
+const getBlockKey = (block: Block) =>
+  [block?.owner, block?.repo, block?.id || ""].join("__");
+
 export const LocalBlock = (props: LocalBlockProps) => {
   const {
     block,
@@ -35,8 +41,14 @@ export const LocalBlock = (props: LocalBlockProps) => {
     context,
   } = props;
   const [content, setContent] = useState<string>(originalContent || "");
-
   const [Block, setBlock] = useState<React.ComponentType<any> | null>(null);
+  const blockKey = getBlockKey(block);
+
+  useEffect(() => {
+    if (!(blockKey in kvStore)) {
+      kvStore[blockKey] = {};
+    }
+  }, [blockKey]);
 
   const getContents = async () => {
     const importPrefix = "../../../../../";
@@ -100,6 +112,40 @@ export const LocalBlock = (props: LocalBlockProps) => {
     return data;
   };
 
+  const onStoreGet = async (key: string) => {
+    styledLog(`Triggered store get: ${key}`);
+    window.postMessage(
+      {
+        type: "store-get--request",
+        key,
+      },
+      "*"
+    );
+    const value = kvStore[blockKey][key];
+    window.postMessage(
+      {
+        type: "store-get--response",
+        value,
+      },
+      "*"
+    );
+    return value;
+  };
+
+  const onStoreSet = async (key: string, value: any) => {
+    styledLog(`Triggered store set: ${key} = ${JSON.stringify(value)}`);
+    window.postMessage(
+      {
+        type: "store-set",
+        key,
+        value,
+      },
+      "*"
+    );
+    if (value === undefined) delete kvStore[blockKey][key];
+    else kvStore[blockKey][key] = JSON.parse(JSON.stringify(value));
+  };
+
   if (!Block) return null;
   return (
     <ThemeProvider>
@@ -115,6 +161,8 @@ export const LocalBlock = (props: LocalBlockProps) => {
           onNavigateToPath={onNavigateToPath}
           onUpdateContent={setContent}
           onRequestGitHubData={onRequestGitHubData}
+          onStoreGet={onStoreGet}
+          onStoreSet={onStoreSet}
         />
       </BaseStyles>
     </ThemeProvider>
@@ -124,10 +172,13 @@ export const LocalBlock = (props: LocalBlockProps) => {
 function styledLog(...args: any[]) {
   const argsWithColor = args.reduce((acc, arg) => {
     if (typeof arg === "string") {
-      return [...acc, `%cℹ ${arg}`, "color: #444763; background-color: #e5eafe; padding: 0.2em; display: inline-block"];
+      return [
+        ...acc,
+        `%cℹ ${arg}`,
+        "color: #444763; background-color: #e5eafe; padding: 0.2em; display: inline-block",
+      ];
     }
     return [...acc, arg];
-  }
-    , [] as any[]);
+  }, [] as any[]);
   console.info(...argsWithColor);
 }

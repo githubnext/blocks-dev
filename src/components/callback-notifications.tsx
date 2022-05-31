@@ -6,7 +6,7 @@ interface NotificationType {
   info: any;
   details: string;
 }
-export const CallbackNotifications = ({ }) => {
+export const CallbackNotifications = ({}) => {
   const [notifications, setNotifications] = useState<
     (NotificationType | null)[]
   >([]);
@@ -43,6 +43,20 @@ export const CallbackNotifications = ({ }) => {
             </>
           ),
           details: JSON.stringify(event.data.config, null, 2),
+        },
+        "store-get--request": {
+          title: "Store get",
+          info: <>Requested store get:</>,
+          details: event.data.key,
+        },
+        "store-set": {
+          title: "Store set",
+          info: <>Requested store set:</>,
+          details: JSON.stringify(
+            { key: event.data.key, value: event.data.value },
+            null,
+            2
+          ),
         },
       }[eventType];
       if (!type) return;

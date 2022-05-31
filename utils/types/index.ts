@@ -53,6 +53,9 @@ export type CommonBlockProps = {
     params?: Record<string, any>
   ) => Promise<any>;
 
+  onStoreGet: (key: string) => Promise<any>;
+  onStoreSet: (key: string, value: any) => Promise<void>;
+
   // private API for use by githubnext/blocks-examples blocks only
   BlockComponent: any;
   onRequestBlocksRepos: () => Promise<BlocksRepo[]>;
