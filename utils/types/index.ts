@@ -9,6 +9,7 @@ export interface Block {
   matches?: string[];
   owner?: string;
   repo?: string;
+  repoId?: number;
 }
 
 export interface BlocksRepo {
