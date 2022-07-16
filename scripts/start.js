@@ -3,6 +3,7 @@ const chalk = require("chalk");
 const express = require("express");
 const { createServer } = require("vite");
 const viteConfigDev = require("./config/vite.config.dev");
+const parseGitConfig = require("parse-git-config");
 
 process.env.BABEL_ENV = "development";
 process.env.NODE_ENV = "development";
@@ -18,6 +19,10 @@ const main = async () => {
     const json = fs.readFileSync("./blocks.config.json");
     const obj = JSON.parse(json);
     res.json(obj);
+  });
+
+  app.get("/git.config.json", (req, res) => {
+    res.json(parseGitConfig.sync());
   });
 
   app.use(vite.middlewares);
