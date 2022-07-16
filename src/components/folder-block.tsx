@@ -2,7 +2,7 @@ import { useFolderContent } from "../hooks";
 import { AppInnerProps } from "./app-inner";
 import { ErrorState } from "./error-state";
 import { LoadingState } from "./loading-state";
-import { ProductionBlock } from "./production-block";
+// import { ProductionBlock } from "./production-block";
 import { LocalBlock } from "./local-block";
 
 export function FolderBlock(
@@ -53,7 +53,7 @@ export function FolderBlock(
           width: "100%",
         }}
       >
-        <ProductionBlock
+        {/* <ProductionBlock
           tree={data.tree}
           context={{
             ...data.context,
@@ -61,7 +61,7 @@ export function FolderBlock(
           }}
           block={block}
           metadata={metadata}
-        />
+        /> */}
       </div>
     ) : (
       <div

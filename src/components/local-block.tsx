@@ -59,7 +59,7 @@ export const LocalBlock = (props: LocalBlockProps) => {
 
   const getContents = async () => {
     const importPrefix = "../../../../../";
-    const imports = import.meta.glob(`../../../../../blocks/**`);
+    const imports = import.meta.glob("../../../../../blocks/**");
     const importPath = importPrefix + block.entry;
     const importContent = imports[importPath];
     const content = await loadable(importContent);

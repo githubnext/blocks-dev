@@ -44,7 +44,7 @@
     "react-query": "^3.39.0",
     "styled-components": "^5.3.5",
     "twind": "^0.16.17",
-    "vite": "^2.9.8"
+    "vite": "^3.0.0"
   },
   "devDependencies": {
     "@types/git-url-parse": "^9.0.1",
