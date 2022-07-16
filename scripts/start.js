@@ -1,3 +1,4 @@
+const fs = require("fs");
 const chalk = require("chalk");
 const express = require("express");
 const { createServer } = require("vite");
@@ -12,6 +13,13 @@ const main = async () => {
   const app = express();
 
   const vite = await createServer(viteConfigDev);
+
+  app.get("/blocks.config.json", (req, res) => {
+    const json = fs.readFileSync("./blocks.config.json");
+    const obj = JSON.parse(json);
+    res.json(obj);
+  });
+
   app.use(vite.middlewares);
 
   console.log(
