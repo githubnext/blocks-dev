@@ -48,7 +48,6 @@ export const BlockPicker = ({
         ? { repoUrl: debouncedSearchTerm }
         : { searchTerm: debouncedSearchTerm }
     )
-    console.log({ debouncedSearchTerm, currentSearchTerm: currentSearchTerm.current, searchTerm })
     // make sure we're not updating with stale data
     if (currentSearchTerm.current !== debouncedSearchTerm) return;
     if (!blocksRepos) {
@@ -83,7 +82,7 @@ export const BlockPicker = ({
         </div>
         {status === "loading" ? (
           <div className={tw("px-3 py-6 mb-1 w-full text-center italic")}>
-            <Text color="fg.muted">
+            <Text color="fg.muted" className={tw("px-5 pb-3")}>
               {isSearchTermUrl ? (
                 <>
                   Loading Blocks from the{" "}
@@ -97,7 +96,7 @@ export const BlockPicker = ({
           </div>
         ) : status === "error" ? (
           <div className={tw("py-5 mb-1 w-full text-center flex flex-col items-center")}>
-            <Text color="fg.muted" className={tw("px-5")}>
+            <Text color="fg.muted" className={tw("px-5 pb-3")}>
               {isSearchTermUrl ? (
                 <>
                   We weren't able to find the{" "}
@@ -110,7 +109,7 @@ export const BlockPicker = ({
             </Text>
           </div>
         ) : !blocks?.length ? (
-          <div className={tw("pt-5 mb-1 w-full text-center flex flex-col items-center")}>
+          <div className={tw("pt-5 pb-3 w-full text-center flex flex-col items-center")}>
             <Text color="fg.muted" className={tw("px-5")}>
               {isSearchTermUrl ? (
                 <>
