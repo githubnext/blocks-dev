@@ -16,7 +16,7 @@ type BlockPickerProps = {
   value: Block,
   onChange: (block: Block) => void,
   onRequestBlocksRepos: CommonBlockProps["onRequestBlocksRepos"],
-  children: ReactNode,
+  children?: ReactNode,
 }
 export const BlockPicker = ({
   value,
