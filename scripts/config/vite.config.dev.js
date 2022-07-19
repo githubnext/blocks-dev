@@ -21,7 +21,7 @@ const config = defineConfig({
   },
   optimizeDeps: {
     // what else can we do here?
-    include: ['react', 'react-dom', 'react-dom/client', 'git-url-parse', 'styled-components', 'hoist-non-react-statics', 'react-is', 'lodash.uniqueid', '@primer/react'],
+    include: ['react', 'react-dom', 'react-dom/client', 'git-url-parse', 'styled-components', 'hoist-non-react-statics', 'react-is', 'lodash.uniqueid', '@primer/react', 'picomatch-browser'],
   },
   build: {
     commonjsOptions: {

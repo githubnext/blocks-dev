@@ -59,7 +59,12 @@ export type CommonBlockProps = {
 
   // private API for use by githubnext/blocks-examples blocks only
   BlockComponent: any;
-  onRequestBlocksRepos: () => Promise<BlocksRepo[]>;
+  onRequestBlocksRepos: (params?: {
+    path?: string;
+    searchTerm?: string;
+    repoUrl?: string;
+    type?: "file" | "folder";
+  }) => Promise<BlocksRepo[]>;
 };
 
 export type FileContent = {

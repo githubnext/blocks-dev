@@ -1,5 +1,4 @@
 import { TreeItem } from "../types";
-import { components } from "@octokit/openapi-types";
 import untypedExtensionToLanguage from "../extensionToLanguage.json";
 const extensionToLanguage: Record<string, string> = untypedExtensionToLanguage;
 
