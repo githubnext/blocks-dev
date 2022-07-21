@@ -11,7 +11,7 @@ import {
   callbackFunctionsInternal,
   useHandleCallbacks,
 } from "../utils";
-import { BlockComponent } from "./BlockComponent";
+import { BlockComponentProps, BlockComponent } from "./BlockComponent";
 
 export const Block = ({
   props,
@@ -20,14 +20,16 @@ export const Block = ({
   props: FileBlockProps | FolderBlockProps;
   setProps: (props: FileBlockProps | FolderBlockProps) => void;
 }) => {
-  const [Block, setBlock] = useState<BlockType>(undefined);
+  const [Block, setBlock] = useState<BlockType | undefined>(undefined);
 
   const getContents = async () => {
     const importPrefix = "../../../../../";
     const imports = import.meta.glob("../../../../../blocks/**");
     const importPath = importPrefix + props.block.entry;
     const importContent = imports[importPath];
-    const content = await loadable(importContent);
+    // @ts-ignore
+    const content = loadable(importContent);
+    // @ts-ignore
     setBlock(content);
   };
   useEffect(() => {
@@ -37,7 +39,7 @@ export const Block = ({
   useHandleCallbacks("*");
 
   const onUpdateContent = useCallback(
-    (content) => {
+    (content: string) => {
       // the app does not send async content updates back to the block that
       // originated them, to avoid overwriting subsequent changes; we update the
       // content locally so controlled components work. this doesn't overwrite
@@ -49,7 +51,7 @@ export const Block = ({
   );
 
   const WrappedBlockComponent = useCallback(
-    (nestedProps) => {
+    (nestedProps: BlockComponentProps) => {
       let context = {
         ...props.context,
         ...nestedProps.context,
@@ -60,7 +62,7 @@ export const Block = ({
       const childRepo = [context.owner, context.repo].join("/");
       const isSameRepo = parentRepo === childRepo;
       if (!isSameRepo) {
-        context.sha = nestedProps.sha || "HEAD";
+        context.sha = nestedProps.context.sha || "HEAD";
       }
 
       return <BlockComponent {...nestedProps} context={context} />;

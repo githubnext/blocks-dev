@@ -1,35 +1,38 @@
 import { useEffect, useState } from "react";
-import type { FileBlockProps, FolderBlockProps } from "@utils";
+import type {
+  BlocksRepo,
+  CommonBlockProps,
+  FileBlockProps,
+  FolderBlockProps,
+} from "@utils";
 
-export const allCallbackFunctions = {
+export const callbackFunctions: Pick<
+  CommonBlockProps,
+  | "onUpdateMetadata"
+  | "onNavigateToPath"
+  | "onUpdateContent"
+  | "onRequestGitHubData"
+  | "onStoreGet"
+  | "onStoreSet"
+  | "onRequestBlocksRepos"
+> = {
   onUpdateMetadata: (metadata) => makeRequest("onUpdateMetadata", { metadata }),
   onNavigateToPath: (path) => makeRequest("onNavigateToPath", { path }),
   onUpdateContent: (content) => makeRequest("onUpdateContent", { content }),
   onRequestGitHubData: (path, params) =>
     makeRequest("onRequestGitHubData", { path, params }),
   onStoreGet: (key) => makeRequest("onStoreGet", { key }),
-  onStoreSet: (key, value) => makeRequest("onStoreSet", { key, value }),
+  onStoreSet: (key, value) =>
+    makeRequest("onStoreSet", { key, value }) as Promise<void>,
   onRequestBlocksRepos: (params) =>
-    makeRequest("onRequestBlocksRepos", { params }),
-  private__onFetchInternalEndpoint: (path, params) =>
+    makeRequest("onRequestBlocksRepos", { params }) as Promise<BlocksRepo[]>,
+};
+
+export const callbackFunctionsInternal = {
+  ...callbackFunctions,
+  private__onFetchInternalEndpoint: (path: string, params: any) =>
     makeRequest("private__onFetchInternalEndpoint", { path, params }),
 };
-
-const filterObject = (obj, filter) => {
-  const filtered = {};
-  for (const key in obj) {
-    if (filter(key)) {
-      filtered[key] = obj[key];
-    }
-  }
-  return filtered;
-};
-
-export const callbackFunctionsInternal = allCallbackFunctions;
-export const callbackFunctions = filterObject(
-  allCallbackFunctions,
-  (key) => !key.startsWith("private__")
-);
 
 export const useHandleCallbacks = (origin: string) => {
   useEvent("message", (event: MessageEvent) => {
@@ -48,9 +51,12 @@ export const useHandleCallbacks = (origin: string) => {
   });
 };
 
-export const useEvent = (type, onEvent: (event: Event) => void) => {
+export const useEvent = <K extends keyof WindowEventMap>(
+  type: K,
+  onEvent: (event: WindowEventMap[K]) => void
+) => {
   useEffect(() => {
-    const onEventInstance = (event: Event) => {
+    const onEventInstance = (event: WindowEventMap[K]) => {
       onEvent(event);
     };
     addEventListener(type, onEventInstance);
@@ -64,8 +70,11 @@ const getUniqueId = () => {
   return uniqueId;
 };
 
-export const pendingRequests = {};
-export const makeRequest = (type, args) => {
+export const pendingRequests: Record<
+  string,
+  { resolve: (value: unknown) => void; reject: (reason?: any) => void }
+> = {};
+export const makeRequest = (type: string, args: any) => {
   // for responses to this specific request
   const requestId = type + "--" + getUniqueId();
 
@@ -82,8 +91,8 @@ export const makeRequest = (type, args) => {
   });
 };
 
-export const postMessage = (type, payload, otherArgs = {}) => {
-  window.top.postMessage(
+export const postMessage = (type: string, payload: any, otherArgs = {}) => {
+  window.top?.postMessage(
     {
       type,
       payload,

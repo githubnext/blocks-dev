@@ -1,6 +1,6 @@
 import type { Block, FileContext, FolderContext } from "@utils";
 
-type BlockComponentProps = {
+export type BlockComponentProps = {
   context: FileContext | FolderContext;
   block: Block;
 };

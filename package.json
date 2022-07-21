@@ -49,6 +49,7 @@
   },
   "devDependencies": {
     "@types/git-url-parse": "^9.0.1",
+    "@types/loadable__component": "^5.13.4",
     "@types/lodash.uniqueid": "^4.0.6",
     "@types/picomatch": "^2.3.0",
     "react": "^18.1.0",
