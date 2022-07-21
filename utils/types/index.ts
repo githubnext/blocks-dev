@@ -3,7 +3,6 @@ export interface Block {
   type: string;
   title: string;
   description: string;
-  sandbox?: boolean;
   entry: string;
   extensions?: string[];
   matches?: string[];
@@ -44,6 +43,8 @@ export type FolderContext = {
 };
 
 export type CommonBlockProps = {
+  block: Block;
+
   metadata: any;
   onUpdateMetadata: (_: any) => void;
   onNavigateToPath: (_: string) => void;

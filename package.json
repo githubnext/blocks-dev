@@ -38,16 +38,18 @@
     "express": "^4.18.1",
     "git-url-parse": "^11.6.0",
     "lodash.uniqueid": "^4.0.1",
+    "parse-git-config": "^3.0.0",
     "picomatch-browser": "^2.2.6",
     "prettier": "^2.6.2",
     "react-error-boundary": "^3.1.4",
     "react-query": "^3.39.0",
     "styled-components": "^5.3.5",
     "twind": "^0.16.17",
-    "vite": "^2.9.8"
+    "vite": "^3.0.0"
   },
   "devDependencies": {
     "@types/git-url-parse": "^9.0.1",
+    "@types/loadable__component": "^5.13.4",
     "@types/lodash.uniqueid": "^4.0.6",
     "@types/picomatch": "^2.3.0",
     "react": "^18.1.0",
