@@ -69,11 +69,3 @@ export default function (props: FolderBlockProps) {
   ...
 }
 ```
-
-## bundleCodesandboxFiles
-
-A helper function to generate a bundle of files to send to CodeSandbox's Sandpack library. For an example, see the [custom Block template repo](https://github.com/githubnext/blocks-template/blob/main/src/components/production-block.tsx).
-
-## onRequestGitHubData
-
-A helper function to handle the `onRequestGitHubData` callback for Blocks. This function will GET data from any GitHub API endpoint.
