@@ -37,7 +37,7 @@ export const callbackFunctionsInternal = {
 export const useHandleCallbacks = (origin: string) => {
   useEvent("message", (event: MessageEvent) => {
     const { data } = event;
-    if (event.origin !== origin) return;
+    if (origin !== "*" && event.origin !== origin) return;
     const request = pendingRequests[data.requestId];
     if (!request) return;
 
