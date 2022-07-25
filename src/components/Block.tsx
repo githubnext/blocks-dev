@@ -4,8 +4,10 @@ import type {
   FolderBlockProps,
 } from "@utils";
 import loadable from "@loadable/component";
+import * as PrimerReact from "@primer/react";
 import { BaseStyles, ThemeProvider } from "@primer/react";
-import { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
+import ReactDOM from "react-dom";
 import {
   callbackFunctions,
   callbackFunctionsInternal,
@@ -13,28 +15,81 @@ import {
 } from "../utils";
 import { BlockComponentProps, BlockComponent } from "./BlockComponent";
 
+const Bundle = ({ bundle }: { bundle: Asset[] }) => {
+  useEffect(() => {
+    const elements: HTMLElement[] = [];
+
+    bundle.forEach((asset) => {
+      if (asset.name.endsWith(".js")) {
+        const jsElement = document.createElement("script");
+        jsElement.textContent = `
+var BlockBundle = ({ React, ReactDOM, PrimerReact }) => {
+  function require(name) {
+    switch (name) {
+      case "react":
+        return React;
+      case "react-dom":
+        return ReactDOM;
+      case "@primer/react":
+      case "@primer/components":
+          return PrimerReact;
+      default:
+        console.log("no module '" + name + "'");
+        return null;
+    }
+  }
+${asset.content}
+  return BlockBundle;
+};`;
+
+        elements.push(jsElement);
+      } else if (asset.name.endsWith(".css")) {
+        const cssElement = document.createElement("style");
+        cssElement.textContent = asset.content;
+        elements.push(cssElement);
+      }
+    });
+
+    for (const el of elements) {
+      document.body.appendChild(el);
+    }
+    return () => {
+      for (const el of elements) {
+        document.body.removeChild(el);
+      }
+    };
+  }, [bundle]);
+
+  return null;
+};
+
 export const Block = ({
+  bundle,
   props,
   setProps,
 }: {
+  bundle: Asset[];
   props: FileBlockProps | FolderBlockProps;
   setProps: (props: FileBlockProps | FolderBlockProps) => void;
 }) => {
   const [Block, setBlock] = useState<BlockType | undefined>(undefined);
 
-  const getContents = async () => {
-    const importPrefix = "../../../../../";
-    const imports = import.meta.glob("../../../../../blocks/**");
-    const importPath = importPrefix + props.block.entry;
-    const importContent = imports[importPath];
-    // @ts-ignore
-    const content = loadable(importContent);
-    // @ts-ignore
-    setBlock(content);
-  };
   useEffect(() => {
-    getContents();
-  }, [props.block.entry]);
+    if (bundle.length === 0) {
+      const importPrefix = "../../../../../";
+      const imports = import.meta.glob("../../../../../blocks/**");
+      const importPath = importPrefix + props.block.entry;
+      const importContent = imports[importPath];
+      // @ts-ignore
+      const content = loadable(importContent);
+      // @ts-ignore
+      setBlock(content);
+    } else {
+      setBlock(
+        () => window.BlockBundle({ React, ReactDOM, PrimerReact }).default
+      );
+    }
+  }, []);
 
   useHandleCallbacks("*");
 
@@ -79,6 +134,8 @@ export const Block = ({
 
   return (
     <>
+      {bundle.length > 0 && <Bundle bundle={bundle} />}
+
       {Block && props && (
         // @ts-ignore
         <ThemeProvider>

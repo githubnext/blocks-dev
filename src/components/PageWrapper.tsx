@@ -4,22 +4,24 @@ import { ErrorBoundary } from "./ErrorBoundary";
 
 const PageWrapper = () => {
   const [bundleProps, setProps] = useIframeParentInterface("*");
-  const props = bundleProps.props;
 
-  if (!props) return LoadingIndicator;
+  if (bundleProps.bundle === null) return <Message>Block not found</Message>;
+  if (!bundleProps.bundle || !bundleProps.props)
+    return <Message>Loading...</Message>;
 
   return (
     <ErrorBoundary
       errorKey={[
-        props.block.id,
-        props.block.owner,
-        props.block.repo,
-        props.block.content,
+        bundleProps.props.block.id,
+        bundleProps.props.block.owner,
+        bundleProps.props.block.repo,
+        bundleProps.props.content,
       ].join("-")}
     >
       <Block
-        key={JSON.stringify(props.block)}
-        props={props}
+        key={JSON.stringify(bundleProps.props.block)}
+        bundle={bundleProps.bundle}
+        props={bundleProps.props}
         setProps={setProps}
       />
     </ErrorBoundary>
@@ -28,7 +30,7 @@ const PageWrapper = () => {
 
 export default PageWrapper;
 
-const LoadingIndicator = (
+const Message = ({ children }: { children: React.ReactNode }) => (
   <div
     style={{
       width: "100%",
@@ -40,6 +42,6 @@ const LoadingIndicator = (
       fontStyle: "italic",
     }}
   >
-    <div>Loading...</div>
+    <div>{children}</div>
   </div>
 );
