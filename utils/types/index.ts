@@ -8,14 +8,12 @@ export interface Block {
   matches?: string[];
   owner: string;
   repo: string;
-  repoId?: number;
 }
 
 export interface BlocksRepo {
   owner: string;
   repo: string;
   full_name: string;
-  id: number;
   html_url: string;
   description: string;
   stars: number;
