@@ -55,17 +55,28 @@ export type CommonBlockProps = {
     params?: Record<string, any>
   ) => Promise<any>;
 
-  onStoreGet: (key: string) => Promise<any>;
-  onStoreSet: (key: string, value: any) => Promise<void>;
-
-  // private API for use by githubnext/blocks-examples blocks only
-  BlockComponent: any;
   onRequestBlocksRepos: (params?: {
     path?: string;
     searchTerm?: string;
     repoUrl?: string;
     type?: "file" | "folder";
   }) => Promise<BlocksRepo[]>;
+
+  BlockComponent: ({
+    block,
+    context,
+  }: {
+    block: { owner: string; repo: string; id: string };
+    context: Partial<{
+      owner: string;
+      repo: string;
+      path: string;
+      sha: string;
+    }>;
+  }) => JSX.Element;
+
+  onStoreGet: (key: string) => Promise<any>;
+  onStoreSet: (key: string, value: any) => Promise<void>;
 };
 
 export type FileContent = {
