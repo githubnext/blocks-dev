@@ -6,8 +6,8 @@ export interface Block {
   entry: string;
   extensions?: string[];
   matches?: string[];
-  owner?: string;
-  repo?: string;
+  owner: string;
+  repo: string;
   repoId?: number;
 }
 
@@ -67,12 +67,12 @@ export type CommonBlockProps = {
     context,
   }: {
     block: { owner: string; repo: string; id: string };
-    context: Partial<{
-      owner: string;
-      repo: string;
-      path: string;
-      sha: string;
-    }>;
+    context?: {
+      owner?: string;
+      repo?: string;
+      path?: string;
+      sha?: string;
+    };
   }) => JSX.Element;
 
   onStoreGet: (key: string) => Promise<any>;
