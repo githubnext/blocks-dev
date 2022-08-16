@@ -65,7 +65,11 @@ const getNestedChildren = (
         ),
       };
     }),
-  ];
+  ].sort((a, b) => {
+    if (a.type === b.type)
+      return a.name.localeCompare(b.name, undefined, { numeric: true });
+    return a.type === "tree" ? -1 : 1;
+  });
 };
 
 export function getNestedFileTree(files: TreeItem[]): NestedFileTree[] {
