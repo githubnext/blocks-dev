@@ -12,7 +12,8 @@
     "bin",
     "dist",
     "scripts",
-    "src"
+    "src",
+    "tsconfig.json"
   ],
   "scripts": {
     "build": "tsup --dts",
