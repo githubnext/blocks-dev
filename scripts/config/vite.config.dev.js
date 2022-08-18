@@ -23,13 +23,12 @@ const config = defineConfig({
       "react",
       "react-dom",
       "react-dom/client",
-      "git-url-parse",
       "styled-components",
       "hoist-non-react-statics",
       "react-is",
       "lodash.uniqueid",
       "@primer/react",
-      "picomatch-browser"
+      "picomatch-browser",
     ],
   },
   build: {
