@@ -7,6 +7,7 @@ import loadable from "@loadable/component";
 import * as PrimerReact from "@primer/react";
 import { BaseStyles, ThemeProvider } from "@primer/react";
 import React, { useCallback, useEffect, useState } from "react";
+import ReactJSXRuntime from "react/jsx-runtime";
 import ReactDOM from "react-dom";
 import {
   callbackFunctions,
@@ -23,11 +24,13 @@ const Bundle = ({ bundle }: { bundle: Asset[] }) => {
       if (asset.name.endsWith(".js")) {
         const jsElement = document.createElement("script");
         jsElement.textContent = `
-var BlockBundle = ({ React, ReactDOM, PrimerReact }) => {
+var BlockBundle = ({ React, ReactJSXRuntime, ReactDOM, PrimerReact }) => {
   function require(name) {
     switch (name) {
       case "react":
         return React;
+      case "react/jsx-runtime":
+        return ReactJSXRuntime;
       case "react-dom":
         return ReactDOM;
       case "@primer/react":
@@ -86,7 +89,9 @@ export const Block = ({
       setBlock(content);
     } else {
       setBlock(
-        () => window.BlockBundle({ React, ReactDOM, PrimerReact }).default
+        () =>
+          window.BlockBundle({ React, ReactJSXRuntime, ReactDOM, PrimerReact })
+            .default
       );
     }
   }, []);
