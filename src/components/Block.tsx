@@ -7,7 +7,7 @@ import loadable from "@loadable/component";
 import * as PrimerReact from "@primer/react";
 import { BaseStyles, ThemeProvider } from "@primer/react";
 import React, { useCallback, useEffect, useState } from "react";
-import ReactJSXRuntime from "react/jsx-runtime";
+import * as ReactJSXRuntime from "react/jsx-runtime";
 import ReactDOM from "react-dom";
 import {
   callbackFunctions,
