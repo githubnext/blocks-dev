@@ -4,6 +4,7 @@ const express = require("express");
 const { createServer } = require("vite");
 const viteConfigDev = require("./config/vite.config.dev");
 const parseGitConfig = require("parse-git-config");
+const argv = require('minimist')(process.argv.slice(2));
 
 process.env.BABEL_ENV = "development";
 process.env.NODE_ENV = "development";
@@ -11,9 +12,20 @@ process.env.NODE_ENV = "development";
 require("./config/env");
 
 const main = async () => {
+  const port = argv.port || process.env.PORT || 4000;
   const app = express();
 
-  const vite = await createServer(viteConfigDev);
+  const vite = await createServer({
+    ...viteConfigDev,
+    server: {
+      ...viteConfigDev.server,
+      port,
+      hmr: {
+        ...viteConfigDev.server.hmr || {},
+        host: "localhost",
+      }
+    },
+  });
 
   app.get("/blocks.config.json", (req, res) => {
     const json = fs.readFileSync("./blocks.config.json");
@@ -30,9 +42,9 @@ const main = async () => {
   app.use(vite.middlewares);
 
   console.log(
-    chalk.cyan("Starting the development server at http://localhost:4000")
+    chalk.cyan(`Starting the development server at http://localhost:${port}`)
   );
-  app.listen(4000);
+  app.listen(port);
 
   if (process.env.CI !== "true") {
     // Gracefully exit when stdin ends
