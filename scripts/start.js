@@ -2,7 +2,7 @@ const fs = require("fs");
 const chalk = require("chalk");
 const express = require("express");
 const { createServer } = require("vite");
-const viteConfigDev = require("./config/vite.config.dev");
+const getViteConfigDev = require("./config/vite.config.dev");
 const parseGitConfig = require("parse-git-config");
 const argv = require('minimist')(process.argv.slice(2));
 
@@ -15,17 +15,7 @@ const main = async () => {
   const port = argv.port || process.env.PORT || 4000;
   const app = express();
 
-  const vite = await createServer({
-    ...viteConfigDev,
-    server: {
-      ...viteConfigDev.server,
-      port,
-      hmr: {
-        ...viteConfigDev.server.hmr || {},
-        host: "localhost",
-      }
-    },
-  });
+  const vite = await createServer(getViteConfigDev(port))
 
   app.get("/blocks.config.json", (req, res) => {
     const json = fs.readFileSync("./blocks.config.json");

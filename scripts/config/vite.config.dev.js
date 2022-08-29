@@ -1,12 +1,16 @@
-const { defineConfig, searchForWorkspaceRoot } = require("vite");
+const { searchForWorkspaceRoot } = require("vite");
 const react = require("@vitejs/plugin-react");
 const paths = require("./paths");
 
 // https://vitejs.dev/config/
-const config = defineConfig({
+const getViteConfigDev = port => ({
   root: paths.blocks + "/src",
   server: {
     middlewareMode: true,
+    port,
+    hmr: {
+      host: "localhost",
+    },
     fs: {
       allow: [searchForWorkspaceRoot(process.cwd())],
     },
@@ -39,4 +43,4 @@ const config = defineConfig({
   plugins: [react()],
 });
 
-module.exports = config;
+module.exports = getViteConfigDev;
