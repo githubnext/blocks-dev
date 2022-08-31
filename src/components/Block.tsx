@@ -9,6 +9,7 @@ import { BaseStyles, ThemeProvider } from "@primer/react";
 import React, { useCallback, useEffect, useState } from "react";
 import * as ReactJSXRuntime from "react/jsx-runtime";
 import ReactDOM from "react-dom";
+import ReactDOMClient from "react-dom/client";
 import {
   callbackFunctions,
   callbackFunctionsInternal,
@@ -24,7 +25,7 @@ const Bundle = ({ bundle }: { bundle: Asset[] }) => {
       if (asset.name.endsWith(".js")) {
         const jsElement = document.createElement("script");
         jsElement.textContent = `
-var BlockBundle = ({ React, ReactJSXRuntime, ReactDOM, PrimerReact }) => {
+var BlockBundle = ({ React, ReactJSXRuntime, ReactDOM, ReactDOMClient, PrimerReact }) => {
   function require(name) {
     switch (name) {
       case "react":
@@ -33,6 +34,8 @@ var BlockBundle = ({ React, ReactJSXRuntime, ReactDOM, PrimerReact }) => {
         return ReactJSXRuntime;
       case "react-dom":
         return ReactDOM;
+      case "react-dom/client":
+        return ReactDOMClient;
       case "@primer/react":
       case "@primer/components":
           return PrimerReact;
@@ -90,8 +93,13 @@ export const Block = ({
     } else {
       setBlock(
         () =>
-          window.BlockBundle({ React, ReactJSXRuntime, ReactDOM, PrimerReact })
-            .default
+          window.BlockBundle({
+            React,
+            ReactJSXRuntime,
+            ReactDOM,
+            ReactDOMClient,
+            PrimerReact,
+          }).default
       );
     }
   }, []);
