@@ -48,7 +48,7 @@ export function VueBlock(props: VueBlockProps) {
       const importPath = importPrefix + props.props.block.entry;
       const importContent = imports[importPath];
       let module = await importContent();
-      console.log(module);
+
       setModule(module);
     };
     handleMount();
