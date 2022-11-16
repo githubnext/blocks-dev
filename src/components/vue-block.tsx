@@ -22,7 +22,10 @@ function VueBlockInner({
       ...rest,
     });
 
-    const app = createApp(module.default);
+    const app = createApp(module.default, {
+      ...rest,
+    });
+
     app.mount(ref.current);
 
     return () => {
