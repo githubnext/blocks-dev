@@ -30,6 +30,7 @@
     "@octokit/openapi-types": "^11.2.0",
     "@primer/octicons-react": "^17.3.0",
     "@primer/react": "^35.2.1",
+    "@sveltejs/vite-plugin-svelte": "^1.2.0",
     "@vitejs/plugin-react": "^2.0.1",
     "chalk": "^4.1.2",
     "chokidar": "^3.5.3",
@@ -37,6 +38,7 @@
     "dotenv": "^16.0.1",
     "dotenv-expand": "^8.0.3",
     "esbuild": "0.14.54",
+    "esbuild-svelte": "^0.7.3",
     "express": "^4.18.1",
     "lodash.uniqueid": "^4.0.1",
     "minimist": "^1.2.6",
@@ -45,6 +47,7 @@
     "prettier": "^2.6.2",
     "react-query": "^3.39.0",
     "styled-components": "^5.3.5",
+    "svelte": "^3.53.1",
     "twind": "^0.16.17",
     "vite": "^3.2.4"
   },

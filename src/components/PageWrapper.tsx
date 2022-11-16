@@ -1,6 +1,9 @@
 import { useIframeParentInterface } from "../utils";
 import { Block } from "./Block";
 import { ErrorBoundary } from "./ErrorBoundary";
+import { SvelteBlock } from "./svelte-block";
+
+type BlockStackType = "svelte" | "react";
 
 const PageWrapper = () => {
   const [bundleProps, setProps] = useIframeParentInterface("*");
@@ -8,6 +11,8 @@ const PageWrapper = () => {
   if (bundleProps.bundle === null) return <Message>Block not found</Message>;
   if (!bundleProps.bundle || !bundleProps.props)
     return <Message>Loading...</Message>;
+
+  let stack: BlockStackType = bundleProps.props.block.stack || "react";
 
   return (
     <ErrorBoundary
@@ -18,19 +23,29 @@ const PageWrapper = () => {
         bundleProps.props.content,
       ].join("-")}
     >
-      <Block
-        key={JSON.stringify(bundleProps.props.block)}
-        bundle={bundleProps.bundle}
-        props={bundleProps.props}
-        setProps={setProps}
-      />
+      {stack === "react" && (
+        <Block
+          key={JSON.stringify(bundleProps.props.block)}
+          bundle={bundleProps.bundle}
+          props={bundleProps.props}
+          setProps={setProps}
+        />
+      )}
+      {stack === "svelte" && (
+        <SvelteBlock
+          key={JSON.stringify(bundleProps.props.block)}
+          bundle={bundleProps.bundle}
+          props={bundleProps.props}
+          setProps={setProps}
+        />
+      )}
     </ErrorBoundary>
   );
 };
 
 export default PageWrapper;
 
-const Message = ({ children }: { children: React.ReactNode }) => (
+export const Message = ({ children }: { children: React.ReactNode }) => (
   <div
     style={{
       width: "100%",
