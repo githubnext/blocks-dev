@@ -9,14 +9,23 @@ interface SvelteBlockProps {
   setProps: (props: FileBlockProps | FolderBlockProps) => void;
 }
 
-function SvelteBlockInner({ module }: { module: any }) {
+function SvelteBlockInner({
+  module,
+  ...rest
+}: { module: any } & SvelteBlockProps["props"]) {
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (!ref.current) return;
 
+    console.info("Initializing Svelte block with the following props", {
+      ...rest,
+    });
+
     const svelte = new module.default({
       target: ref.current,
-      props: {},
+      props: {
+        ...rest,
+      },
     });
     return () => {
       svelte.$destroy();
@@ -46,5 +55,5 @@ export function SvelteBlock(props: SvelteBlockProps) {
 
   if (!module) return <Message>Loading...</Message>;
 
-  return <SvelteBlockInner module={module} />;
+  return <SvelteBlockInner {...props.props} module={module} />;
 }
