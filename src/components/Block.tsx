@@ -17,6 +17,13 @@ import {
 } from "../utils";
 import { BlockComponentProps, BlockComponent } from "./BlockComponent";
 
+declare global {
+  interface Window {
+    // todo(matt): annotate this function type correctly.
+    BlockBundle: any;
+  }
+}
+
 const Bundle = ({ bundle }: { bundle: Asset[] }) => {
   useEffect(() => {
     const elements: HTMLElement[] = [];
