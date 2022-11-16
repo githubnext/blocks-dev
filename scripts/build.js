@@ -1,6 +1,7 @@
 const esbuild = require("esbuild");
 const path = require("path");
 const sveltePlugin = require("esbuild-svelte");
+const { default: vuePlugin } = require("esbuild-plugin-vue");
 
 process.env.BABEL_ENV = "production";
 process.env.NODE_ENV = "production";
@@ -20,7 +21,7 @@ const build = async () => {
       globalName: "BlockBundle",
       minify: true,
       external: ["fs", "path", "assert", "react", "react-dom", "@primer/react"],
-      plugins: [sveltePlugin()],
+      plugins: [sveltePlugin(), vuePlugin()],
     });
   });
 

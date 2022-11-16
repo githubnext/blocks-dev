@@ -2,8 +2,9 @@ import { useIframeParentInterface } from "../utils";
 import { Block } from "./Block";
 import { ErrorBoundary } from "./ErrorBoundary";
 import { SvelteBlock } from "./svelte-block";
+import { VueBlock } from "./vue-block";
 
-type BlockStackType = "svelte" | "react";
+type BlockStackType = "svelte" | "react" | "vue";
 
 const PageWrapper = () => {
   const [bundleProps, setProps] = useIframeParentInterface("*");
@@ -33,6 +34,14 @@ const PageWrapper = () => {
       )}
       {stack === "svelte" && (
         <SvelteBlock
+          key={JSON.stringify(bundleProps.props.block)}
+          bundle={bundleProps.bundle}
+          props={bundleProps.props}
+          setProps={setProps}
+        />
+      )}
+      {stack === "vue" && (
+        <VueBlock
           key={JSON.stringify(bundleProps.props.block)}
           bundle={bundleProps.bundle}
           props={bundleProps.props}

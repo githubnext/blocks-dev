@@ -2,6 +2,7 @@ const { searchForWorkspaceRoot } = require("vite");
 const react = require("@vitejs/plugin-react");
 const paths = require("./paths");
 const { svelte } = require("@sveltejs/vite-plugin-svelte");
+const vue = require("@vitejs/plugin-vue");
 
 // https://vitejs.dev/config/
 const getViteConfigDev = (port) => ({
@@ -41,7 +42,7 @@ const getViteConfigDev = (port) => ({
       include: /node_modules/,
     },
   },
-  plugins: [react(), svelte()],
+  plugins: [react(), svelte(), vue()],
 });
 
 module.exports = getViteConfigDev;

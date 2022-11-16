@@ -38,6 +38,7 @@
     "dotenv": "^16.0.1",
     "dotenv-expand": "^8.0.3",
     "esbuild": "0.14.54",
+    "esbuild-plugin-vue": "^0.2.4",
     "esbuild-svelte": "^0.7.3",
     "express": "^4.18.1",
     "lodash.uniqueid": "^4.0.1",
@@ -49,7 +50,9 @@
     "styled-components": "^5.3.5",
     "svelte": "^3.53.1",
     "twind": "^0.16.17",
-    "vite": "^3.2.4"
+    "vite": "^3.2.4",
+    "vue": "^3.2.45",
+    "@vitejs/plugin-vue": "^3.2.0"
   },
   "devDependencies": {
     "@types/loadable__component": "^5.13.4",
