@@ -16,6 +16,8 @@ const PageWrapper = () => {
   let stack: BlockStackType = bundleProps.props.block.stack || "react";
 
   return (
+    // todo(Matt) figure out why this is freaking out the TS compiler
+    // @ts-ignore
     <ErrorBoundary
       errorKey={[
         bundleProps.props.block.id,
