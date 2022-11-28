@@ -1,6 +1,6 @@
 {
   "name": "@githubnext/blocks",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "license": "MIT",
   "engines": {
     "node": ">=14.0.0"
