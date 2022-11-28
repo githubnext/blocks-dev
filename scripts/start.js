@@ -21,11 +21,13 @@ const main = async () => {
     const json = fs.readFileSync("./blocks.config.json");
     const obj = JSON.parse(json);
     res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Private-Network", "true");
     res.json(obj);
   });
 
   app.get("/git.config.json", (req, res) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Private-Network", "true");
     res.json(parseGitConfig.sync());
   });
 
