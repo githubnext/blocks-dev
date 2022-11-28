@@ -40,7 +40,17 @@ const getViteConfigDev = port => ({
       include: /node_modules/,
     },
   },
-  plugins: [react()],
+  plugins: [
+    react(),
+    {
+      name: 'configure-response-headers',
+      configureServer: server => {
+        server.middlewares.use((_req, res, next) => {
+          res.setHeader('Access-Control-Allow-Private-Network', 'true');
+          next();
+        });
+      }
+    }],
 });
 
 module.exports = getViteConfigDev;
