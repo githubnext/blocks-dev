@@ -50,7 +50,8 @@ export type CommonBlockProps = {
   onUpdateContent: (_: string) => void;
   onRequestGitHubData: (
     path: string,
-    params?: Record<string, any>
+    params?: Record<string, any>,
+    rawData?: boolean
   ) => Promise<any>;
 
   onRequestBlocksRepos: (params?: {
