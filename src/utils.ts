@@ -19,8 +19,8 @@ export const callbackFunctions: Pick<
   onUpdateMetadata: (metadata) => makeRequest("onUpdateMetadata", { metadata }),
   onNavigateToPath: (path) => makeRequest("onNavigateToPath", { path }),
   onUpdateContent: (content) => makeRequest("onUpdateContent", { content }),
-  onRequestGitHubData: (path, params) =>
-    makeRequest("onRequestGitHubData", { path, params }),
+  onRequestGitHubData: (path, params, rawData) =>
+    makeRequest("onRequestGitHubData", { path, params, rawData }),
   onStoreGet: (key) => makeRequest("onStoreGet", { key }),
   onStoreSet: (key, value) =>
     makeRequest("onStoreSet", { key, value }) as Promise<void>,
