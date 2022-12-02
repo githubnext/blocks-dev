@@ -1,11 +1,10 @@
-// @ts-nocheck
 import { useEffect, useState } from "react";
 import type {
   BlocksRepo,
   CommonBlockProps,
   FileBlockProps,
   FolderBlockProps,
-} from "@utils";
+} from "../utils/types";
 
 import { Endpoints, OctokitResponse, RequestParameters } from "@octokit/types";
 import { endpoint } from "@octokit/endpoint";
@@ -14,7 +13,7 @@ export async function onRequestGitHubData<T extends keyof Endpoints>(
   route: T,
   parameters?: Endpoints[T]["parameters"] & RequestParameters
 ): Promise<OctokitResponse<Endpoints[T]>["data"]["response"]["data"]> {
-  const params = endpoint<T>(route, parameters);
+  const params = endpoint<T, Endpoints[T]["parameters"]>(route, parameters);
 
   if (params.method !== "GET") {
     throw new Error("Only GET requests are supported.");
@@ -22,10 +21,11 @@ export async function onRequestGitHubData<T extends keyof Endpoints>(
 
   return makeRequest("onRequestGitHubData", {
     path: params.url,
-    headers: params.headers,
-    mediaType: params.mediaType,
+    ...params,
   });
 }
+
+export type OnRequestGitHubData = typeof onRequestGitHubData;
 
 export const callbackFunctions: Pick<
   CommonBlockProps,
