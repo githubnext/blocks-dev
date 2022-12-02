@@ -7,19 +7,24 @@ import type {
   FolderBlockProps,
 } from "@utils";
 
-import { Endpoints, OctokitResponse } from "@octokit/types";
+import { Endpoints, OctokitResponse, RequestParameters } from "@octokit/types";
 import { endpoint } from "@octokit/endpoint";
 
 export async function onRequestGitHubData<T extends keyof Endpoints>(
   route: T,
-  parameters?: Endpoints[T]["parameters"]
+  parameters?: Endpoints[T]["parameters"] & RequestParameters
 ): Promise<OctokitResponse<Endpoints[T]>["data"]["response"]["data"]> {
   const params = endpoint<T>(route, parameters);
+
   if (params.method !== "GET") {
     throw new Error("Only GET requests are supported.");
   }
 
-  return makeRequest("onRequestGitHubData", { path: params.url });
+  return makeRequest("onRequestGitHubData", {
+    path: params.url,
+    headers: params.headers,
+    mediaType: params.mediaType,
+  });
 }
 
 export const callbackFunctions: Pick<
