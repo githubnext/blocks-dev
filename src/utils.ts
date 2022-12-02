@@ -9,9 +9,15 @@ import type {
 import { Endpoints, OctokitResponse, RequestParameters } from "@octokit/types";
 import { endpoint } from "@octokit/endpoint";
 
+type FilterConditionally<Source, Condition> = Pick<
+  Source,
+  { [K in keyof Source]: K extends Condition ? K : never }[keyof Source]
+>;
+type GetEndpoints = FilterConditionally<Endpoints, `GET ${string}`>;
+
 export async function onRequestGitHubData<
-  Endpoint extends keyof Endpoints,
-  EndpointParameters extends Endpoints[Endpoint]["parameters"]
+  Endpoint extends keyof GetEndpoints,
+  EndpointParameters extends GetEndpoints[Endpoint]["parameters"]
 >(
   route: Endpoint,
   parameters?: EndpointParameters & RequestParameters
