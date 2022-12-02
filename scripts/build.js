@@ -19,6 +19,9 @@ const build = async () => {
       globalName: "BlockBundle",
       minify: true,
       external: ["fs", "path", "assert", "react", "react-dom", "@primer/react"],
+      loader: {
+        '.ttf': 'file',
+      },
     });
   });
 
