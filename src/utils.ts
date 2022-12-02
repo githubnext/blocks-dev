@@ -9,11 +9,14 @@ import type {
 import { Endpoints, OctokitResponse, RequestParameters } from "@octokit/types";
 import { endpoint } from "@octokit/endpoint";
 
-export async function onRequestGitHubData<T extends keyof Endpoints>(
-  route: T,
-  parameters?: Endpoints[T]["parameters"] & RequestParameters
-): Promise<OctokitResponse<Endpoints[T]>["data"]["response"]["data"]> {
-  const params = endpoint<T, Endpoints[T]["parameters"]>(route, parameters);
+export async function onRequestGitHubData<
+  Endpoint extends keyof Endpoints,
+  EndpointParameters extends Endpoints[Endpoint]["parameters"]
+>(
+  route: Endpoint,
+  parameters?: EndpointParameters & RequestParameters
+): Promise<OctokitResponse<Endpoints[Endpoint]>["data"]["response"]["data"]> {
+  const params = endpoint<Endpoint, EndpointParameters>(route, parameters);
 
   if (params.method !== "GET") {
     throw new Error("Only GET requests are supported.");
