@@ -27,7 +27,9 @@
   },
   "dependencies": {
     "@loadable/component": "^5.15.0",
+    "@octokit/endpoint": "^7.0.3",
     "@octokit/openapi-types": "^11.2.0",
+    "@octokit/types": "^8.0.0",
     "@primer/octicons-react": "^17.3.0",
     "@primer/react": "^35.2.1",
     "@vitejs/plugin-react": "^2.0.1",
