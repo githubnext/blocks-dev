@@ -1,4 +1,4 @@
-import { OnRequestGitHubData } from "../../src/utils";
+import { OnRequestGitHubEndpoint } from "../../src/utils";
 
 export interface Block {
   id: string;
@@ -50,7 +50,12 @@ export type CommonBlockProps = {
   onNavigateToPath: (_: string) => void;
   onRequestUpdateContent: (_: string) => void;
   onUpdateContent: (_: string) => void;
-  onRequestGitHubData: OnRequestGitHubData;
+  onRequestGitHubEndpoint: OnRequestGitHubEndpoint;
+  onRequestGitHubData: (
+    path: string,
+    params?: Record<string, any>,
+    rawData?: boolean
+  ) => Promise<any>;
   onRequestBlocksRepos: (params?: {
     path?: string;
     searchTerm?: string;

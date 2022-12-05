@@ -15,7 +15,7 @@ type FilterConditionally<Source, Condition> = Pick<
 >;
 type GetEndpoints = FilterConditionally<Endpoints, `GET ${string}`>;
 
-export async function onRequestGitHubData<
+export async function onRequestGitHubEndpoint<
   Endpoint extends keyof GetEndpoints,
   EndpointParameters extends GetEndpoints[Endpoint]["parameters"]
 >(
@@ -30,11 +30,10 @@ export async function onRequestGitHubData<
 
   return makeRequest("onRequestGitHubData", {
     path: params.url,
-    ...params,
   });
 }
 
-export type OnRequestGitHubData = typeof onRequestGitHubData;
+export type OnRequestGitHubEndpoint = typeof onRequestGitHubEndpoint;
 
 export const callbackFunctions: Pick<
   CommonBlockProps,
@@ -45,11 +44,14 @@ export const callbackFunctions: Pick<
   | "onStoreGet"
   | "onStoreSet"
   | "onRequestBlocksRepos"
+  | "onRequestGitHubEndpoint"
 > = {
   onUpdateMetadata: (metadata) => makeRequest("onUpdateMetadata", { metadata }),
   onNavigateToPath: (path) => makeRequest("onNavigateToPath", { path }),
   onUpdateContent: (content) => makeRequest("onUpdateContent", { content }),
-  onRequestGitHubData,
+  onRequestGitHubData: (path, params, rawData) =>
+    makeRequest("onRequestGitHubData", { path, params, rawData }),
+  onRequestGitHubEndpoint,
   onStoreGet: (key) => makeRequest("onStoreGet", { key }),
   onStoreSet: (key, value) =>
     makeRequest("onStoreSet", { key, value }) as Promise<void>,
