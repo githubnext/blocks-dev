@@ -28,7 +28,7 @@ export async function onRequestGitHubEndpoint<
     throw new Error("Only GET requests are supported.");
   }
 
-  return makeRequest("onRequestGitHubData", {
+  return makeRequest("onRequestGitHubEndpoint", {
     path: params.url,
   });
 }
