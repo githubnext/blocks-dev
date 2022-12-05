@@ -28,9 +28,7 @@ export async function onRequestGitHubEndpoint<
     throw new Error("Only GET requests are supported.");
   }
 
-  return makeRequest("onRequestGitHubEndpoint", {
-    path: params.url,
-  });
+  return makeRequest("onRequestGitHubEndpoint", params);
 }
 
 export type OnRequestGitHubEndpoint = typeof onRequestGitHubEndpoint;
