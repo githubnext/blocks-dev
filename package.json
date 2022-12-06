@@ -27,6 +27,8 @@
   },
   "dependencies": {
     "@loadable/component": "^5.15.0",
+    "@octokit/openapi-types": "^12.11.0",
+    "@octokit/types": "^6.0.0",
     "@primer/octicons-react": "^17.3.0",
     "@primer/react": "^35.2.1",
     "@vitejs/plugin-react": "^2.0.1",
@@ -49,8 +51,6 @@
     "vite": "^3.0.0"
   },
   "devDependencies": {
-    "@octokit/openapi-types": "^12.11.0",
-    "@octokit/types": "^6.0.0",
     "@types/loadable__component": "^5.13.4",
     "@types/lodash.uniqueid": "^4.0.6",
     "@types/picomatch": "^2.3.0",
