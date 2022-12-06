@@ -7,7 +7,6 @@ import type {
 } from "../utils/types";
 
 import { Endpoints, OctokitResponse, RequestParameters } from "@octokit/types";
-import { endpoint } from "@octokit/endpoint";
 
 type FilterConditionally<Source, Condition> = Pick<
   Source,
@@ -22,13 +21,7 @@ export async function onRequestGitHubEndpoint<
   route: Endpoint,
   parameters?: EndpointParameters & RequestParameters
 ): Promise<OctokitResponse<Endpoints[Endpoint]>["data"]["response"]["data"]> {
-  const params = endpoint<Endpoint, EndpointParameters>(route, parameters);
-
-  if (params.method !== "GET") {
-    throw new Error("Only GET requests are supported.");
-  }
-
-  return makeRequest("onRequestGitHubEndpoint", params);
+  return makeRequest("onRequestGitHubEndpoint", { route, parameters });
 }
 
 export type OnRequestGitHubEndpoint = typeof onRequestGitHubEndpoint;
