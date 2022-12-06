@@ -4,7 +4,27 @@ import type {
   CommonBlockProps,
   FileBlockProps,
   FolderBlockProps,
-} from "@utils";
+} from "../utils/types";
+
+import { Endpoints, OctokitResponse, RequestParameters } from "@octokit/types";
+
+type FilterConditionally<Source, Condition> = Pick<
+  Source,
+  { [K in keyof Source]: K extends Condition ? K : never }[keyof Source]
+>;
+type GetEndpoints = FilterConditionally<Endpoints, `GET ${string}`>;
+
+export async function onRequestGitHubEndpoint<
+  Endpoint extends keyof GetEndpoints,
+  EndpointParameters extends GetEndpoints[Endpoint]["parameters"]
+>(
+  route: Endpoint,
+  parameters?: EndpointParameters & RequestParameters
+): Promise<OctokitResponse<Endpoints[Endpoint]>["data"]["response"]["data"]> {
+  return makeRequest("onRequestGitHubEndpoint", { route, parameters });
+}
+
+export type OnRequestGitHubEndpoint = typeof onRequestGitHubEndpoint;
 
 export const callbackFunctions: Pick<
   CommonBlockProps,
@@ -15,12 +35,14 @@ export const callbackFunctions: Pick<
   | "onStoreGet"
   | "onStoreSet"
   | "onRequestBlocksRepos"
+  | "onRequestGitHubEndpoint"
 > = {
   onUpdateMetadata: (metadata) => makeRequest("onUpdateMetadata", { metadata }),
   onNavigateToPath: (path) => makeRequest("onNavigateToPath", { path }),
   onUpdateContent: (content) => makeRequest("onUpdateContent", { content }),
   onRequestGitHubData: (path, params, rawData) =>
     makeRequest("onRequestGitHubData", { path, params, rawData }),
+  onRequestGitHubEndpoint,
   onStoreGet: (key) => makeRequest("onStoreGet", { key }),
   onStoreSet: (key, value) =>
     makeRequest("onStoreSet", { key, value }) as Promise<void>,
