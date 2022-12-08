@@ -30,7 +30,7 @@
     "@octokit/openapi-types": "^12.11.0",
     "@octokit/types": "^6.0.0",
     "@primer/octicons-react": "^17.3.0",
-    "@primer/react": "^35.2.1",
+    "@primer/react": "^35.15.1",
     "@vitejs/plugin-react": "^2.0.1",
     "chalk": "^4.1.2",
     "chokidar": "^3.5.3",
