@@ -5,17 +5,24 @@ type RecursiveGitTree =
 
 type RecursiveGitTreeItem = RecursiveGitTree[number];
 
-type ItemType = "blob" | "tree";
+// Create a new type that is everything in RecursiveGitTreeItem but with "path" marked as required.
+// This is because Octokit types "path" as optional, but it's never undefined in reality AFAICT.
+type RecursiveGitTreeItemWithPath = Omit<RecursiveGitTreeItem, "path"> & {
+  path: string;
+};
 
-class TreeNode {
+type ItemType = "blob" | "tree";
+type RootNode = { path: "/" };
+
+export class TreeNode {
   path: string;
   type: ItemType;
-  meta: RecursiveGitTreeItem;
+  meta: RecursiveGitTreeItemWithPath | RootNode;
   children: TreeNode[];
 
   constructor(
     path: string,
-    meta: RecursiveGitTreeItem,
+    meta: RecursiveGitTreeItemWithPath | RootNode,
     type: ItemType,
     children: TreeNode[] = []
   ) {
@@ -84,7 +91,11 @@ export function buildTree(items: RecursiveGitTree) {
         }
       }
       if (!found) {
-        const newNode = new TreeNode(part, item, "tree");
+        const newNode = new TreeNode(
+          part,
+          { ...item, path: item.path || "" },
+          "tree"
+        );
         currentNode.children.push(newNode);
         currentNode = newNode;
         nodes.push(newNode);
